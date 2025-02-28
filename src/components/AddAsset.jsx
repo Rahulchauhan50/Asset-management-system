@@ -83,7 +83,7 @@ function AddAsset() {
         console.log(formData)
         if(data){
           formData.append("id", data._id);
-          const reponse = await axios.post(`https://asset-backend-wxnd.onrender.com/data/update-asset`, formData, {
+          const reponse = await axios.post(`http://localhost:5000/data/update-asset`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             }
@@ -91,7 +91,7 @@ function AddAsset() {
         console.log(reponse)
 
         }else{
-          const { data } = await axios.post('https://asset-backend-wxnd.onrender.com/data/add-asset', formData, {
+          const { data } = await axios.post('http://localhost:5000/data/add-asset', formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             }
@@ -493,11 +493,11 @@ function AddAsset() {
                     value={Condition}
                     onSelect={(e)=>setCondition(e.target.value)}
                   >
-                    <option  value="Excellent" >Excellent</option>
-                    <option value="Good">Good</option>
-                    <option value="Moderate">Moderate</option>
-                    <option value="Poor">Poor</option>
-                    <option value="Very poor">Very poor</option>
+                    <option  value="5" >Excellent</option>
+                    <option value="4">Good</option>
+                    <option value="3">Moderate</option>
+                    <option value="2">Poor</option>
+                    <option value="1">Very poor</option>
                   </select>
                   </div>
                   <div className="my-4">
@@ -707,21 +707,16 @@ function AddAsset() {
                     onSelect={(e)=>setdeptArea(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
-                    <option value='Electronics' >Creative</option>
-                    <option value='Electronics' >Graphics</option>
-                    <option value='Electronics' >CS</option>
-                    <option value='Electronics' >Sales</option>
-                    <option value='Electronics' >Presales</option>
-                    <option value='Electronics' >Finance</option>
-                    <option value='Electronics' >HR</option>
-                    <option value='Electronics' >It</option>
-                    <option value='Electronics' >Admin</option>
-                    <option value='Electronics' >Media</option>
-                    <option value='Electronics' >BTL</option>
-                    <option value='Electronics' >ATL</option>
-                    <option value='Electronics' >Digital</option>
-                    <option value='Electronics' >Management</option>
-                    <option value='Electronics' >other</option>
+                    <option value='Creative' >Creative</option>
+                    <option value='CS' >CS</option>
+                    <option value='Sales' >Sales</option>
+                    <option value='Finance' >Finance</option>
+                    <option value='HR' >HR</option>
+                    <option value='It' >It</option>
+                    <option value='Admin' >Admin</option>
+                    <option value='Digital' >Digital</option>
+                    <option value='Management' >Management</option>
+                    <option value='other' >other</option>
 
                   </select>
               </div>

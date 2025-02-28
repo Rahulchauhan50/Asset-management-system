@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 // const BaseUrl = process.env.REACT_APP_BASE_URL
-const BaseUrl = 'https://asset-backend-wxnd.onrender.com'
+const BaseUrl = 'http://localhost:5000'
 
 
 export const UserDataApi = createApi({
@@ -15,6 +15,7 @@ export const UserDataApi = createApi({
     },
   }), 
   endpoints: (builder) => ({
+
     getAllData: builder.query({
       query: ({ page = 1, limit = 10 }) => `data/get-asset?page=${page}&limit=${limit}`,
   }),
@@ -40,6 +41,13 @@ export const UserDataApi = createApi({
         body: newSong,
       }),
     }),
+    getAssetConditions: builder.query({
+      query: () => `data/get-condition`,
+  }),
+    getAssetValue: builder.query({
+      query: () => `data/get-value`,
+  })
+
   }),
 });
 
@@ -85,17 +93,10 @@ export const UserDataApi = createApi({
 export const {
   useGetAllDataQuery,
   useGetAllUserQuery,
+  useGetAssetConditionsQuery,
+  useGetAssetValueQuery,
   useDeleteAllFavSongsMutation,
-  useDeleteFavSongMutation,
-  useIsFavSongMutation,
-  useIsFavArtistMutation,
-  useDeleteAllFavArtistsMutation,
-  useDeleteFavArtistMutation,
-  useDeleteAllHistoryMutation,
-  useDeleteHistoryMutation,
   useAddAssetMutation ,
-  useAddFavArtistMutation ,
-  useAddHistoryMutation ,
   useDeleteAssetMutation,
 } = UserDataApi;
 

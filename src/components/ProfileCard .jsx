@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useGetAllUserQuery } from '../redux/services/UserApi';
+import { useGetAllUserQuery} from '../redux/services/UserApi';
 
 const ProfileCard = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { data } = useGetAllUserQuery();
-  console.log(data)
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -12,6 +11,7 @@ const ProfileCard = () => {
 
   return (
     <section className="bg-gray-50 no-scrollbar dark:bg-gray-900 sm:p-5 antialiased p-4 sm:ml-64  overflow-auto">
+
         <div className='flex flex-wrap'>
         {
            data?.map((element, i)=>{

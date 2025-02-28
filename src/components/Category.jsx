@@ -1,14 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import ApexCharts from 'apexcharts';
 import ReactApexChart from 'react-apexcharts';
+import {  useGetAssetValueQuery } from '../redux/services/UserApi';
+
 
 const Category = () => {
-  const [series, setSeries] = useState([35.1, 23.5, 2.4, 5.4]);
+    const { data: assetValue} = useGetAssetValueQuery();  // console.log(data)
+  
 
+    const [series, setSeries] = useState([]);
+
+    useEffect(() => {
+        if (assetValue) {
+            setSeries([
+                assetValue.Creative || 0,
+                assetValue.CS || 0,
+                assetValue.Sales || 0,
+                assetValue.Finance || 0,
+                assetValue.HR || 0,
+                assetValue.It || 0,
+                assetValue.Admin || 0,
+                assetValue.Digital || 0,
+                assetValue.Management || 0,
+                assetValue.other || 0,
+            ]);
+        }
+    }, [assetValue]);
   const getChartOptions = () => {
     return {
       series,
-      colors: ["#1C64F2", "#16BDCA", "#FDBA8C", "#E74694"],
+
+      colors: ["#1C64F2", "#189AB4", "#FDBA8C", "#E74694", "#274472", "#D3B5E5", "#0000FF", "#A45C40", "#F51720", "#05445E"],
       chart: {
         height: 320,
         width: "100%",
@@ -27,30 +49,34 @@ const Category = () => {
                 show: true,
                 fontFamily: "Inter, sans-serif",
                 offsetY: 20,
+
               },
               total: {
                 showAlways: true,
                 show: true,
-                label: "Unique visitors",
-                
+                label: "Total value",
+
                 fontFamily: "Inter, sans-serif",
                 formatter: function (w) {
                   const sum = w.globals.seriesTotals.reduce((a, b) => {
                     return a + b;
                   }, 0);
-                  return '$' + sum + 'k';
+                  return '₹' + sum;
                 },
+                color: "#FFFFFF",
                 style: {
-                    color: "#FFFFFF", // Change this to your desired color
-                  },
+                  color: "#FFFFFF", // Change this to your desired color
+                },
               },
               value: {
                 show: true,
                 fontFamily: "Inter, sans-serif",
                 offsetY: -20,
                 formatter: function (value) {
-                  return value + "k";
+                  return "₹" + value ;
                 },
+                color: "#FFFFFF",
+
               },
             },
             size: "80%",
@@ -62,7 +88,17 @@ const Category = () => {
           top: -2,
         },
       },
-      labels: ["Direct", "Sponsor", "Affiliate", "Email marketing"],
+
+      labels: ["Creative",
+        "CS",
+        "Sales",
+        "Finance",
+        "HR",
+        "It",
+        "Admin",
+        "Digital",
+        "Management",
+        "other"],
       dataLabels: {
         enabled: false,
       },
@@ -70,21 +106,21 @@ const Category = () => {
         position: "bottom",
         fontFamily: "Inter, sans-serif",
         labels: {
-            colors: '#9CA3AF',  // Change this to your desired color
-            useSeriesColors: false, // If true, it uses the series colors for the legend
-          },
+          colors: '#9CA3AF',  // Change this to your desired color
+          useSeriesColors: false, // If true, it uses the series colors for the legend
+        },
       },
       yaxis: {
         labels: {
           formatter: function (value) {
-            return value + "k";
+            return "₹" +  value ;
           },
         },
       },
       xaxis: {
         labels: {
           formatter: function (value) {
-            return value + "k";
+            return "₹" +  value ;
           },
         },
         axisTicks: {
@@ -121,8 +157,9 @@ const Category = () => {
   return (
     <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div className="flex justify-between mb-3">
+        {console.log()}
         <div className="flex justify-center items-center">
-          <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Website traffic</h5>
+          <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Assets value</h5>
           <svg
             data-popover-target="chart-info"
             data-popover-placement="bottom"
@@ -207,7 +244,7 @@ const Category = () => {
       </div>
 
       <div>
-        <div className="flex" id="devices">
+        {/* <div className="flex" id="devices">
           <div className="flex items-center me-4">
             <input
               id="desktop"
@@ -244,13 +281,11 @@ const Category = () => {
               Mobile
             </label>
           </div>
-        </div>
+        </div> */}
       </div>
-
       <div className="py-6" id="donut-chart">
         <ReactApexChart options={getChartOptions()} series={series} type="donut" height={320} />
       </div>
-
     </div>
   );
 };

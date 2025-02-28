@@ -33,7 +33,7 @@ function AddUser() {
       formData.append("name", nameRef.current?.value);
       formData.append("department", departmentRef.current?.value);
   
-      const { data } = await axios.post('https://asset-backend-wxnd.onrender.com/data/add-user', formData, {
+      const { data } = await axios.post('http://localhost:5000/data/add-user', formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }

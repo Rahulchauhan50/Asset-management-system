@@ -30,7 +30,7 @@ const Login = ({ showPopup, handleTogglePopup, handleTogglePopupOut }) => {
                     setIsError(false)
                     localStorage.setItem("token", data.authToken)
                     dispatch(setUserDetails(data))
-                    window.location.href = 'https://assets.infinityadvt.com'
+                    window.location.href = process.env.REACT_APP_CLIENT_URL
                 }
             })
             .catch((error) => {

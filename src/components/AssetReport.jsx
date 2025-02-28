@@ -19,17 +19,9 @@ function AssetReport() {
   const [deleteAsset] = useDeleteAssetMutation();
 
   const calculateTimes = (element) => {
-    if (element?.Quantity_and_value?.Condition === "Excellent") {
-      return 5;
-    } else if (element?.Quantity_and_value?.Condition === "Good") {
-      return 4;
-    } else if (element?.Quantity_and_value?.Condition === "Moderate") {
-      return 3;
-    } else if (element?.Quantity_and_value?.Condition === "Poor") {
-      return 2;
-    } else {
-      return 1;
-    }
+    let num = Number(element?.Quantity_and_value?.Condition)
+    return num
+   
   };
 
   const setCurrentpreview = (element) => {
@@ -43,7 +35,7 @@ function AssetReport() {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('https://asset-backend-wxnd.onrender.com/data/upload-csv', formData, {
+      const response = await axios.post('http://localhost:5000/data/upload-csv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -361,6 +353,7 @@ function AssetReport() {
                           {element?.Location?.Room}
                         </td>
                         <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {console.log(element)}
                           <div className="flex items-center">
                             {Array.from({
                               length: calculateTimes(element),

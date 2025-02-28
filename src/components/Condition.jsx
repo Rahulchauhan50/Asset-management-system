@@ -1,28 +1,34 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ApexCharts from 'apexcharts';
+import {  useGetAssetConditionsQuery } from '../redux/services/UserApi';
+
 
 const Condition = () => {
   const chartRef = useRef(null);
   const apexChart = useRef(null);
+  const { data: assetConditions} = useGetAssetConditionsQuery();  // console.log(data)
+
 
   useEffect(() => {
+    if (!assetConditions) return; // If data is still undefined, do nothing
+  
     const chartOptions = getChartOptions();
-
-    if (chartRef.current) {
+  
+    if (!apexChart.current) {
       apexChart.current = new ApexCharts(chartRef.current, chartOptions);
       apexChart.current.render();
+    } else {
+      // Update chart with new data
+      apexChart.current.updateOptions(chartOptions);
     }
+  
+  }, [assetConditions]); 
 
-    return () => {
-      if (apexChart.current) {
-        apexChart.current.destroy();
-      }
-    };
-  }, []);
+ 
 
   const getChartOptions = () => {
     return {
-      series: [22.8, 16.8, 30.4, 10.7, 5.2],
+      series: [assetConditions?.one || 0, assetConditions?.two || 0, assetConditions?.three || 0, assetConditions?.four || 0, assetConditions?.five || 0],
       colors: ["#16BDCA", "#1C64F2", "#9061F9", "#FACC15", "#F77B7A"],
       chart: {
         height: 420,
@@ -83,6 +89,7 @@ const Condition = () => {
 
   return (
     <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+      {/* {console.log(assetConditions)} */}
       <div className="flex justify-center my-4 items-center w-full">
         <div className="flex-col items-center">
           <div className="flex items-center mb-1">
